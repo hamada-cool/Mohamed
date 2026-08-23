@@ -1,4 +1,4 @@
-import hamada from './assets/images/hamada.png'
+import hamada from '../assets/images/hamada.png'
 export default function Hero() {
   return (
     <section className="container py-5">

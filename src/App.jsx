@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 
-import Navbar from './Navbar'
-import Hero from './Hero'
-import Services from './Services'
-import Projects from './Projects'
-import Skills from './Skills'
-import About from './About'
-import Contact from './Contact'
-import Footer from './Footer'
+import Navbar from './components/Navbar'
+import Hero from './pages/Hero'
+import Services from './pages/Services'
+import Projects from './pages/Projects'
+import Skills from './pages/Skills'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Footer from './components/Footer'
 
 import './App.css'
 
