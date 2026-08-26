@@ -476,23 +476,19 @@ function App() {
 
 
   return (
-    <>
-      <Navbar />
+      <>
+    <Navbar />
 
+    <main>
       <Hero />
-
       <Services />
-
       <Projects />
-
       <Skills />
-
       <About />
-
       <Contact />
-
-      <Footer />
-    </>
+    </main>
+    <Footer />
+  </>
   )
 }
 
