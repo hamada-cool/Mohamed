@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="mt-auto bg-dark text-white py-5">
       <div className="container text-center">
 
-        <h5 className="fw-bold mb-2">Your Website</h5>
+        <h5 className="fw-bold mb-2">Mohdev</h5>
 
         <p className="text-secondary mb-4">
           Building better experiences, one line of code at a time.
