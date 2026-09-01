@@ -53,6 +53,12 @@ body
     padding: 15px 0;
 }
 
+.navbar.navbar-scrolled
+{
+    background: rgba(0,0,0,0.85) !important;
+    backdrop-filter: blur(10px);
+}
+
 @keyframes navbarFade {
 
     from
@@ -146,11 +152,6 @@ body
     box-shadow: 0 0 25px #3b82f6;
 }
 
-.hero-text
-{
-    animation: slideLeft 1s ease;
-}
-
 .profile
 {
     animation: slideRight 1.2s ease;
@@ -191,27 +192,6 @@ body
     color: #3b82f6;
     font-weight: bold;
     min-height: 40px;
-}
-
-.counter
-{
-    font-size: 3rem;
-    font-weight: bold;
-    color: #3b82f6;
-}
-
-.hidden
-{
-    opacity: 0;
-    transform: translateY(60px);
-
-    transition: all 1s ease;
-}
-
-.show
-{
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .particles
@@ -321,12 +301,6 @@ body
         margin: 10px 0;
     }
 
-    .hero-text
-    {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
     .profile
     {
         text-align: center;
@@ -341,11 +315,6 @@ body
 
 @media(max-width: 768px)
 {
-    .counter
-    {
-        font-size: 2rem;
-    }
-
     .profile
     {
         width: 180px;
@@ -399,6 +368,16 @@ body
     transform: translateY(-10px);
 
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#projects i
+{
+    transition: 0.4s;
+}
+
+#projects i:hover
+{
+    transform: scale(1.2) rotate(10deg);
 }
 
 .skills{
@@ -481,4 +460,17 @@ body
     font-size:45px;
 }
 
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+    *,
+    *::before,
+    *::after
+    {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }

@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { BrowserRouter } from 'react-router-dom'
 
 import './index.css'
 import App from './App.jsx'
@@ -18,8 +17,6 @@ AOS.init({
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </StrictMode>,
 )

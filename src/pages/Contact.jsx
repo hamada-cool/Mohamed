@@ -1,4 +1,99 @@
+import { useEffect, useRef, useState } from 'react'
+import emailjs from '@emailjs/browser'
+
+const emailConfig = {
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'lbWq7x4QHZTUe4LHv',
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_mohdev',
+  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_59dd8si',
+}
+
+const initialFormData = {
+  name: '',
+  email: '',
+  message: '',
+}
+
+function validateForm({ name, email, message }) {
+  const errors = {}
+
+  if (!name.trim()) {
+    errors.name = 'Name is required.'
+  }
+
+  if (!email.trim()) {
+    errors.email = 'Email is required.'
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = 'Please enter a valid email address.'
+  }
+
+  if (!message.trim()) {
+    errors.message = 'Message is required.'
+  }
+
+  return errors
+}
+
 export default function Contact() {
+  const [formData, setFormData] = useState(initialFormData)
+  const [errors, setErrors] = useState({})
+  const [status, setStatus] = useState('idle')
+  const statusTimeoutRef = useRef(null)
+
+  const isSending = status === 'sending'
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(statusTimeoutRef.current)
+    }
+  }, [])
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }))
+
+    if (errors[name]) {
+      setErrors((current) => ({
+        ...current,
+        [name]: '',
+      }))
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const nextErrors = validateForm(formData)
+    setErrors(nextErrors)
+    setStatus('idle')
+
+    if (Object.keys(nextErrors).length > 0) {
+      return
+    }
+
+    setStatus('sending')
+
+    try {
+      await emailjs.send(emailConfig.serviceId, emailConfig.templateId, formData, {
+        publicKey: emailConfig.publicKey,
+      })
+
+      setFormData(initialFormData)
+      setStatus('success')
+
+      window.clearTimeout(statusTimeoutRef.current)
+      statusTimeoutRef.current = window.setTimeout(() => {
+        setStatus('idle')
+      }, 3000)
+    } catch (error) {
+      console.error(error)
+      setStatus('error')
+    }
+  }
+
   return (
     <section id="contact" className="container py-5">
 
@@ -31,9 +126,8 @@ export default function Contact() {
               Send Message
             </h3>
 
-            <form id="contactForm">
+            <form id="contactForm" onSubmit={handleSubmit} noValidate>
 
-              {/* NAME */}
               <div className="mb-3">
                 <label className="form-label fw-bold" htmlFor="name">
                   Name
@@ -43,16 +137,23 @@ export default function Contact() {
                   type="text"
                   name="name"
                   id="name"
-                  className="form-control"
+                  className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                   placeholder="Enter your name"
                   required
                   autoComplete="name"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
+
+                {errors.name && (
+                  <div className="invalid-feedback">
+                    {errors.name}
+                  </div>
+                )}
               </div>
 
-              {/* EMAIL */}
               <div className="mb-3">
-                <label className="form-label fw-bol " htmlFor="email">
+                <label className="form-label fw-bold" htmlFor="email">
                   Email
                 </label>
 
@@ -60,14 +161,21 @@ export default function Contact() {
                   type="email"
                   name="email"
                   id="email"
-                  className="form-control"
+                  className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                   placeholder="Enter your email"
                   required
                   autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
+
+                {errors.email && (
+                  <div className="invalid-feedback">
+                    {errors.email}
+                  </div>
+                )}
               </div>
 
-              {/* MESSAGE */}
               <div className="mb-3">
                 <label className="form-label fw-bold" htmlFor="message">
                   Message
@@ -76,32 +184,44 @@ export default function Contact() {
                 <textarea
                   name="message"
                   id="message"
-                  className="form-control"
+                  className={`form-control ${errors.message ? 'is-invalid' : ''}`}
                   placeholder="Enter your message"
                   rows="5"
                   required
+                  value={formData.message}
+                  onChange={handleChange}
                 ></textarea>
+
+                {errors.message && (
+                  <div className="invalid-feedback">
+                    {errors.message}
+                  </div>
+                )}
               </div>
 
-              {/* SUBMIT */}
               <div className="d-grid">
                 <button
                   type="submit"
                   className="btn btn-primary"
+                  disabled={isSending}
                 >
-                  Send Message
+                  {isSending ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
 
             </form>
 
-            {/* SUCCESS MESSAGE */}
-            <div
-              id="successMessage"
-              className="alert alert-success mt-4 text-center d-none"
-            >
-              Your message has been sent successfully!
-            </div>
+            {status === 'success' && (
+              <div className="alert alert-success mt-4 text-center">
+                Your message has been sent successfully!
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="alert alert-danger mt-4 text-center">
+                Failed to send message!
+              </div>
+            )}
 
           </div>
 
@@ -110,5 +230,5 @@ export default function Contact() {
       </div>
 
     </section>
-  );
+  )
 }

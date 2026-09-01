@@ -1,6 +1,6 @@
 export default function Skills() {
   return (
-    <section id="skills" className="skills section-padding">
+    <section id="skills" className="skills">
       <div className="container">
 
         <div className="section-title">

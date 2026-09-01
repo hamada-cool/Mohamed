@@ -1,7 +1,50 @@
+import { useEffect, useState } from 'react'
 import hamada from '../assets/images/hamada.png'
+
+const words = [
+  'Front-End Developer',
+  'Python Developer',
+  'UI Designer',
+  'JavaScript Developer',
+]
+
 export default function Hero() {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const currentWord = words[wordIndex]
+    const delay = isDeleting ? 50 : 100
+    const pause = charIndex === currentWord.length && !isDeleting ? 1500 : delay
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting && charIndex < currentWord.length) {
+        setCharIndex((current) => current + 1)
+        return
+      }
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        setIsDeleting(true)
+        return
+      }
+
+      if (isDeleting && charIndex > 0) {
+        setCharIndex((current) => current - 1)
+        return
+      }
+
+      setIsDeleting(false)
+      setWordIndex((current) => (current + 1) % words.length)
+    }, pause)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [charIndex, isDeleting, wordIndex])
+
   return (
-    <section className="container py-5">
+    <section id="top" className="container py-5">
       <div className="row align-items-center g-5">
 
         <div
@@ -12,7 +55,9 @@ export default function Hero() {
             Hey There 👋
           </h1>
 
-          <h2 className="typing-text mb-4"></h2>
+          <h2 className="typing-text mb-4">
+            {words[wordIndex].slice(0, charIndex)}
+          </h2>
 
           <p className="lead mb-4">
             I create modern, responsive, and user-friendly websites using HTML, CSS, JavaScript, Bootstrap, React.js, and Python. I build dynamic and interactive web applications with React.js, focusing on clean design, reusable components, responsive layouts, and seamless user experiences.

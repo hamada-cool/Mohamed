@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
-
 export default function Footer() {
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || '#contact'
+  const facebookUrl = import.meta.env.VITE_FACEBOOK_URL || '#contact'
+  const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com/hamada-cool'
+  const linkedinUrl =
+    import.meta.env.VITE_LINKEDIN_URL || 'https://www.linkedin.com/in/mohamed-ali-ismail-h195/'
+
   return (
     <footer className="mt-auto bg-dark text-white py-5">
       <div className="container text-center">
@@ -13,33 +17,33 @@ export default function Footer() {
 
         <ul className="list-unstyled d-flex justify-content-center gap-4 mb-4">
           <li>
-            <Link to="/instagram" className="text-white fs-5" aria-label="Instagram">
+            <a href={instagramUrl} className="text-white fs-5" aria-label="Instagram">
               <i className="bi bi-instagram"></i>
-            </Link>
+            </a>
           </li>
 
           <li>
-            <Link to="/facebook" className="text-white fs-5" aria-label="Facebook">
+            <a href={facebookUrl} className="text-white fs-5" aria-label="Facebook">
               <i className="bi bi-facebook"></i>
-            </Link>
+            </a>
           </li>
 
           <li>
-            <Link to="https://github.com/hamada-cool" className="text-white fs-5" aria-label="GitHub">
+            <a href={githubUrl} className="text-white fs-5" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
               <i className="bi bi-github"></i>
-            </Link>
+            </a>
           </li>
 
           <li>
-            <Link to="/contact" className="text-white fs-5" aria-label="Email">
+            <a href="#contact" className="text-white fs-5" aria-label="Email">
               <i className="bi bi-envelope-fill"></i>
-            </Link>
+            </a>
           </li>
 
           <li>
-            <Link to="https://www.linkedin.com/in/mohamed-ali-ismail-h195/" className="text-white fs-5" aria-label="LinkedIn">
+            <a href={linkedinUrl} className="text-white fs-5" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <i className="bi bi-linkedin"></i>
-            </Link>
+            </a>
           </li>
         </ul>
 
