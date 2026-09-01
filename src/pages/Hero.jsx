@@ -15,9 +15,8 @@ export default function Hero() {
           <h2 className="typing-text mb-4"></h2>
 
           <p className="lead mb-4">
-            I create modern responsive websites
-            using HTML, CSS, JavaScript,
-            Bootstrap, and Python.
+            I create modern, responsive, and user-friendly websites using HTML, CSS, JavaScript, Bootstrap, React.js, and Python. I build dynamic and interactive web applications with React.js, focusing on clean design, reusable components, responsive layouts, and seamless user experiences.
+
           </p>
 
           <div className="d-flex gap-3 flex-wrap">
