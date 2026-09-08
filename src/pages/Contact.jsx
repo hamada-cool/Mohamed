@@ -95,140 +95,125 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="container py-5">
-
-      <h2
-        className="text-center fw-bold mb-5"
-        data-aos="fade-up"
-      >
+    <section id="contact" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <h2 className="mb-12 text-center text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl" data-aos="fade-up">
         Contact Me
       </h2>
 
-      <h3
-        className="text-center mb-4 fw-bold"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
+      <h3 className="mb-8 text-center text-xl font-bold text-slate-800 dark:text-slate-100 sm:text-2xl" data-aos="fade-up" data-aos-delay="100">
         Feel free to reach out for collaborations or just a friendly hello!
       </h3>
 
-      <div className="row justify-content-center">
-
-        <div
-          className="col-lg-7 col-md-9"
-          data-aos="fade-up"
-          data-aos-delay="200"
-        >
-
-          <div className="card bg-dark text-white border-0 shadow-lg p-4 service-card">
-
-            <h3 className="text-center mb-4 fw-bold">
+      <div className="flex justify-center">
+        <div className="w-full max-w-2xl" data-aos="fade-up" data-aos-delay="200">
+          <div className="rounded-2xl bg-white p-6 text-slate-900 shadow-xl dark:bg-slate-800 dark:text-white sm:p-8">
+            <h3 className="mb-6 text-center text-2xl font-bold">
               Send Message
             </h3>
 
             <form id="contactForm" onSubmit={handleSubmit} noValidate>
-
-              <div className="mb-3">
-                <label className="form-label fw-bold" htmlFor="name">
+              <div className="mb-5">
+                <label className="mb-2 block font-bold" htmlFor="name">
                   Name
                 </label>
-
                 <input
                   type="text"
                   name="name"
                   id="name"
-                  className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                  className={`w-full rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
+                    errors.name ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  }`}
                   placeholder="Enter your name"
                   required
                   autoComplete="name"
                   value={formData.name}
                   onChange={handleChange}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                 />
-
                 {errors.name && (
-                  <div className="invalid-feedback">
+                  <div id="name-error" className="mt-2 text-sm text-red-300" role="alert">
                     {errors.name}
                   </div>
                 )}
               </div>
 
-              <div className="mb-3">
-                <label className="form-label fw-bold" htmlFor="email">
+              <div className="mb-5">
+                <label className="mb-2 block font-bold" htmlFor="email">
                   Email
                 </label>
-
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                  className={`w-full rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
+                    errors.email ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  }`}
                   placeholder="Enter your email"
                   required
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                 />
-
                 {errors.email && (
-                  <div className="invalid-feedback">
+                  <div id="email-error" className="mt-2 text-sm text-red-300" role="alert">
                     {errors.email}
                   </div>
                 )}
               </div>
 
-              <div className="mb-3">
-                <label className="form-label fw-bold" htmlFor="message">
+              <div className="mb-5">
+                <label className="mb-2 block font-bold" htmlFor="message">
                   Message
                 </label>
-
                 <textarea
                   name="message"
                   id="message"
-                  className={`form-control ${errors.message ? 'is-invalid' : ''}`}
+                  className={`w-full resize-y rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
+                    errors.message ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  }`}
                   placeholder="Enter your message"
                   rows="5"
                   required
                   value={formData.message}
                   onChange={handleChange}
-                ></textarea>
-
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
+                />
                 {errors.message && (
-                  <div className="invalid-feedback">
+                  <div id="message-error" className="mt-2 text-sm text-red-300" role="alert">
                     {errors.message}
                   </div>
                 )}
               </div>
 
-              <div className="d-grid">
+              <div className="grid">
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="rounded-lg bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-60"
                   disabled={isSending}
                 >
                   {isSending ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
-
             </form>
 
             {status === 'success' && (
-              <div className="alert alert-success mt-4 text-center">
+              <div className="mt-5 rounded-lg bg-green-600/20 p-4 text-center text-green-200" role="status">
                 Your message has been sent successfully!
               </div>
             )}
 
             {status === 'error' && (
-              <div className="alert alert-danger mt-4 text-center">
+              <div className="mt-5 rounded-lg bg-red-600/20 p-4 text-center text-red-200" role="alert">
                 Failed to send message!
               </div>
             )}
-
           </div>
-
         </div>
-
       </div>
-
     </section>
   )
 }

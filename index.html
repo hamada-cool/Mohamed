@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/hlogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem('theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.classList.toggle('dark', savedTheme === 'dark' || (!savedTheme && prefersDark))
+      })()
+    </script>
     <meta name="description" content="Mohamed Ali is a Front-End Developer and Python Developer specializing in modern responsive websites, UI design, JavaScript, Bootstrap, and Python."/>
     <meta name="keywords" content="Mohamed Ali, Front-End Developer, Python Developer, JavaScript Developer, Web Developer, React Developer, Bootstrap"/>
     <meta name="author" content="Mohamed Ali"/>
