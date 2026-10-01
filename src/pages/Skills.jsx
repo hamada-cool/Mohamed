@@ -1,53 +1,29 @@
 export default function Skills() {
+  const skillGroups = [
+    { title: 'Frontend', skills: 'HTML · CSS · JavaScript · React' },
+    { title: 'UI toolkit', skills: 'Tailwind CSS · Bootstrap · Responsive design' },
+    { title: 'Python', skills: 'CLI tools · Django · Flask · FastAPI' },
+  ]
+
   return (
-    <section id="skills" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">My Skills</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-300">
-          Technologies I use to build modern and responsive web applications.
-        </p>
-      </div>
-
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-blue-500/20 dark:border-slate-700 dark:bg-slate-900">
-          <i className="fab fa-html5 text-5xl text-blue-500 transition duration-300 group-hover:scale-110" aria-hidden="true"></i>
-          <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">HTML5</h3>
-          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
-            Semantic, accessible and SEO-friendly web pages.
+    <section id="skills" className="bg-forest text-white dark:bg-dark-panel">
+      <div className="page-wrap section-pad grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+        <div>
+          <p className="eyebrow !text-lime">Tools &amp; technologies</p>
+          <h2 className="mt-3 font-display text-4xl leading-tight font-semibold sm:text-5xl">What I work with.</h2>
+          <p className="mt-5 max-w-md text-base leading-7 text-white/75">
+            A practical toolkit for building interfaces and shipping useful software.
           </p>
         </div>
 
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-blue-500/20 dark:border-slate-700 dark:bg-slate-900">
-          <i className="fab fa-css3-alt text-5xl text-blue-500 transition duration-300 group-hover:scale-110" aria-hidden="true"></i>
-          <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">CSS3</h3>
-          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
-            Responsive layouts, Flexbox, Grid and animations.
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-blue-500/20 dark:border-slate-700 dark:bg-slate-900">
-          <i className="fab fa-js-square text-5xl text-blue-500 transition duration-300 group-hover:scale-110" aria-hidden="true"></i>
-          <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">JavaScript</h3>
-          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
-            Interactive websites with modern ES6+ features.
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-blue-500/20 dark:border-slate-700 dark:bg-slate-900">
-          <i className="fab fa-bootstrap text-5xl text-blue-500 transition duration-300 group-hover:scale-110" aria-hidden="true"></i>
-          <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">Bootstrap</h3>
-          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
-            Fast responsive UI using Bootstrap components.
-          </p>
-        </div>
-
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-2 hover:shadow-blue-500/20 dark:border-slate-700 dark:bg-slate-900">
-          <i className="fab fa-python text-5xl text-blue-500 transition duration-300 group-hover:scale-110" aria-hidden="true"></i>
-          <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">Python</h3>
-          <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
-            Backend development, automation and scripting.
-          </p>
-        </div>
+        <dl className="border-t border-white/20">
+          {skillGroups.map(({ title, skills }) => (
+            <div key={title} className="grid gap-2 border-b border-white/20 py-6 sm:grid-cols-[9rem_1fr] sm:gap-6">
+              <dt className="text-sm font-semibold text-lime">{title}</dt>
+              <dd className="text-base leading-7 text-white">{skills}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

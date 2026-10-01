@@ -73,19 +73,20 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={`sticky top-0 z-50 border-b backdrop-blur-md transition-colors ${
+    <nav className={`sticky top-0 z-50 border-b transition-colors ${
       isScrolled
-        ? 'border-slate-200/80 bg-white/90 shadow-lg dark:border-slate-800/80 dark:bg-slate-950/90'
-        : 'border-transparent bg-white/75 dark:bg-slate-950/75'
+        ? 'border-line bg-paper dark:border-white/10 dark:bg-night'
+        : 'border-transparent bg-paper dark:bg-night'
     }`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <a className="text-xl font-bold tracking-wide text-slate-900 dark:text-white" href="#top">
-          MOHAMED
+      <div className="page-wrap flex min-h-18 items-center justify-between gap-4">
+        <a className="flex shrink-0 items-center gap-3 font-display text-sm font-bold text-ink dark:text-white" href="#top">
+          <span className="grid size-9 place-items-center bg-forest text-xs text-lime dark:bg-lime dark:text-ink" aria-hidden="true">MA</span>
+          Mohamed Ali
         </a>
 
         <button
           type="button"
-          className="rounded-lg p-2 text-slate-700 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:hover:bg-slate-800 lg:hidden"
+          className="grid size-10 place-items-center text-ink hover:bg-line dark:text-white dark:hover:bg-dark-panel lg:hidden"
           onClick={() => setIsMenuOpen((open) => !open)}
           aria-controls="navbar-menu"
           aria-expanded={isMenuOpen}
@@ -96,21 +97,20 @@ export default function Navbar() {
 
         <div
           id="navbar-menu"
-          className={`${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-full border-b border-slate-200 bg-white px-4 pb-4 shadow-lg dark:border-slate-800 dark:bg-slate-950 lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none`}
+          className={`${isMenuOpen ? 'block' : 'hidden'} absolute left-0 right-0 top-full border-b border-line bg-paper px-5 pb-5 dark:border-white/10 dark:bg-night sm:px-8 lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0 dark:lg:bg-transparent`}
         >
-          <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-1">
-            {navItems.map(({ id, label, icon }) => (
+          <ul className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-2">
+            {navItems.map(({ id, label }) => (
               <li key={id}>
                 <a
-                  className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  className={`flex items-center gap-2 px-3 py-3 text-sm font-semibold transition-colors lg:py-2 ${
                     activeSection === id
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-slate-700 hover:bg-slate-100 hover:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-400'
+                      ? 'text-forest dark:text-lime'
+                      : 'text-muted hover:text-forest dark:text-slate-300 dark:hover:text-lime'
                   }`}
                   href={`#${id}`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <i className={icon} aria-hidden="true"></i>
                   {label}
                 </a>
               </li>
@@ -118,7 +118,7 @@ export default function Navbar() {
             <li>
               <button
                 type="button"
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-blue-400 lg:w-auto"
+                className="flex w-full items-center gap-2 px-3 py-3 text-left text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime lg:w-auto lg:py-2"
                 onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
               >

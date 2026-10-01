@@ -95,33 +95,30 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <h2 className="mb-12 text-center text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl" data-aos="fade-up">
-        Contact Me
-      </h2>
+    <section id="contact" className="page-wrap section-pad">
+      <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+        <div>
+          <p className="eyebrow">Have a project in mind?</p>
+          <h2 className="section-title">Let’s make it useful.</h2>
+          <p className="body-copy mt-5 max-w-md">
+            Reach out about a collaboration, a project, or just to say hello.
+          </p>
+        </div>
 
-      <h3 className="mb-8 text-center text-xl font-bold text-slate-800 dark:text-slate-100 sm:text-2xl" data-aos="fade-up" data-aos-delay="100">
-        Feel free to reach out for collaborations or just a friendly hello!
-      </h3>
-
-      <div className="flex justify-center">
-        <div className="w-full max-w-2xl" data-aos="fade-up" data-aos-delay="200">
-          <div className="rounded-2xl bg-white p-6 text-slate-900 shadow-xl dark:bg-slate-800 dark:text-white sm:p-8">
-            <h3 className="mb-6 text-center text-2xl font-bold">
-              Send Message
-            </h3>
+        <div className="border-t border-line pt-6 dark:border-white/10 sm:pt-8">
+          <h3 className="mb-6 font-display text-xl font-semibold text-ink dark:text-white">Send a message</h3>
 
             <form id="contactForm" onSubmit={handleSubmit} noValidate>
               <div className="mb-5">
-                <label className="mb-2 block font-bold" htmlFor="name">
+                <label className="mb-2 block text-sm font-semibold" htmlFor="name">
                   Name
                 </label>
                 <input
                   type="text"
                   name="name"
                   id="name"
-                  className={`w-full rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
-                    errors.name ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  className={`w-full border bg-white px-4 py-3 text-ink outline-none transition dark:bg-dark-panel dark:text-white ${
+                    errors.name ? 'border-red-500' : 'border-line focus:border-forest dark:border-white/20 dark:focus:border-lime'
                   }`}
                   placeholder="Enter your name"
                   required
@@ -132,22 +129,22 @@ export default function Contact() {
                   aria-describedby={errors.name ? 'name-error' : undefined}
                 />
                 {errors.name && (
-                  <div id="name-error" className="mt-2 text-sm text-red-300" role="alert">
+                  <div id="name-error" className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                     {errors.name}
                   </div>
                 )}
               </div>
 
               <div className="mb-5">
-                <label className="mb-2 block font-bold" htmlFor="email">
+                <label className="mb-2 block text-sm font-semibold" htmlFor="email">
                   Email
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  className={`w-full rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
-                    errors.email ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  className={`w-full border bg-white px-4 py-3 text-ink outline-none transition dark:bg-dark-panel dark:text-white ${
+                    errors.email ? 'border-red-500' : 'border-line focus:border-forest dark:border-white/20 dark:focus:border-lime'
                   }`}
                   placeholder="Enter your email"
                   required
@@ -158,21 +155,21 @@ export default function Contact() {
                   aria-describedby={errors.email ? 'email-error' : undefined}
                 />
                 {errors.email && (
-                  <div id="email-error" className="mt-2 text-sm text-red-300" role="alert">
+                  <div id="email-error" className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                     {errors.email}
                   </div>
                 )}
               </div>
 
               <div className="mb-5">
-                <label className="mb-2 block font-bold" htmlFor="message">
+                <label className="mb-2 block text-sm font-semibold" htmlFor="message">
                   Message
                 </label>
                 <textarea
                   name="message"
                   id="message"
-                  className={`w-full resize-y rounded-lg border bg-white px-4 py-3 text-slate-900 outline-none transition focus:ring-2 dark:bg-slate-950 dark:text-white ${
-                    errors.message ? 'border-red-400 focus:ring-red-400' : 'border-slate-300 focus:ring-blue-500'
+                  className={`w-full resize-y border bg-white px-4 py-3 text-ink outline-none transition dark:bg-dark-panel dark:text-white ${
+                    errors.message ? 'border-red-500' : 'border-line focus:border-forest dark:border-white/20 dark:focus:border-lime'
                   }`}
                   placeholder="Enter your message"
                   rows="5"
@@ -183,7 +180,7 @@ export default function Contact() {
                   aria-describedby={errors.message ? 'message-error' : undefined}
                 />
                 {errors.message && (
-                  <div id="message-error" className="mt-2 text-sm text-red-300" role="alert">
+                  <div id="message-error" className="mt-2 text-sm text-red-700 dark:text-red-300" role="alert">
                     {errors.message}
                   </div>
                 )}
@@ -192,7 +189,7 @@ export default function Contact() {
               <div className="grid">
                 <button
                   type="submit"
-                  className="rounded-lg bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="min-h-12 bg-forest px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-ink disabled:cursor-not-allowed disabled:opacity-60 dark:bg-lime dark:text-ink dark:hover:bg-white"
                   disabled={isSending}
                 >
                   {isSending ? 'Sending...' : 'Send Message'}
@@ -201,17 +198,16 @@ export default function Contact() {
             </form>
 
             {status === 'success' && (
-              <div className="mt-5 rounded-lg bg-green-600/20 p-4 text-center text-green-200" role="status">
+              <div className="mt-5 border border-green-700/30 bg-green-700/10 p-4 text-sm text-green-900 dark:text-green-200" role="status">
                 Your message has been sent successfully!
               </div>
             )}
 
             {status === 'error' && (
-              <div className="mt-5 rounded-lg bg-red-600/20 p-4 text-center text-red-200" role="alert">
+              <div className="mt-5 border border-red-700/30 bg-red-700/10 p-4 text-sm text-red-800 dark:text-red-200" role="alert">
                 Failed to send message!
               </div>
             )}
-          </div>
         </div>
       </div>
     </section>
