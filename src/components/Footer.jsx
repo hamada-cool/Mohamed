@@ -3,6 +3,7 @@ export default function Footer() {
   const facebookUrl = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com/hamadacool28'
   const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com/hamada-cool'
   const linkedinUrl = import.meta.env.VITE_LINKEDIN_URL || 'https://www.linkedin.com/in/mohamed-ali-ismail-h195/'
+  const emailUrl = import.meta.env.VITE_EMAIL_URL || 'mohamedali32947@gmail.com'
 
   return (
     <footer className="border-t border-line bg-paper py-10 text-ink dark:border-white/10 dark:bg-night dark:text-white">
@@ -29,7 +30,7 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <a href="mailto:mohamedali32947@gmail.com" className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="Email">
+            <a href={emailUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="Email">
               <i className="fa-solid fa-envelope" aria-hidden="true"></i>
             </a>
           </li>
