@@ -1,9 +1,18 @@
+
 export default function Footer() {
-  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || '#contact'
-  const facebookUrl = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com/hamadacool28'
-  const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com/hamada-cool'
-  const linkedinUrl = import.meta.env.VITE_LINKEDIN_URL || 'https://www.linkedin.com/in/mohamed-ali-ismail-h195/'
-  const emailUrl = 'googlegmail://co?to=mohamedali32947@gmail.com'
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || '#contact';
+  const facebookUrl = import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com/hamadacool28';
+  const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com/hamada-cool';
+  const linkedinUrl = import.meta.env.VITE_LINKEDIN_URL || 'https://www.linkedin.com/in/mohamed-ali-ismail-h195/';
+  const emailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=mohamedali32947@gmail.com';
+
+  const socialLinks = [
+    { url: instagramUrl, icon: 'fa-brands fa-instagram', label: 'Instagram' },
+    { url: facebookUrl, icon: 'fa-brands fa-facebook', label: 'Facebook', external: true },
+    { url: githubUrl, icon: 'fa-brands fa-github', label: 'GitHub', external: true },
+    { url: emailUrl, icon: 'fa-brands fa-google', label: 'Gmail', external: true },
+    { url: linkedinUrl, icon: 'fa-brands fa-linkedin', label: 'LinkedIn', external: true },
+  ];
 
   return (
     <footer className="border-t border-line bg-paper py-10 text-ink dark:border-white/10 dark:bg-night dark:text-white">
@@ -14,31 +23,15 @@ export default function Footer() {
         </div>
 
         <ul className="flex flex-wrap gap-5">
-          <li>
-            <a href={instagramUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="Instagram">
-              <i className="fa-brands fa-instagram" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href={facebookUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="Facebook">
-              <i className="fa-brands fa-facebook" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href={githubUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
-              <i className="fa-brands fa-github" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href={emailUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="Open Gmail">
-              <i className="fa-solid fa-envelope" aria-hidden="true"></i>
-            </a>
-          </li>
-          <li>
-            <a href={linkedinUrl} className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-              <i className="fa-brands fa-linkedin" aria-hidden="true"></i>
-            </a>
-          </li>
+          {socialLinks.map(({ url, icon, label, external }) => (
+            <li key={label}>
+              <a href={url} aria-label={label} title={label}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="text-sm font-semibold text-muted transition-colors hover:text-forest dark:text-slate-300 dark:hover:text-lime">
+                <i className={icon} aria-hidden="true"></i>
+              </a>
+            </li>
+          ))}
         </ul>
 
         <p className="text-sm text-muted dark:text-slate-400">
