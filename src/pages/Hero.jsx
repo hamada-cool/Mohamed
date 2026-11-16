@@ -1,18 +1,28 @@
 import { useEffect, useState } from 'react'
-import hamada from '../assets/images/hamada.png'
-
-const words = [
-  'React interfaces',
-  'Python tools',
-  'accessible experiences',
-]
+import hamada from '../assets/images/hamada-optimized.jpg'
+import { useLanguage } from '../i18n/useLanguage.js'
 
 export default function Hero() {
+  const { t } = useLanguage()
+  const words = t('hero.words')
   const [wordIndex, setWordIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
 
   useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const handleMotionPreference = (event) => setPrefersReducedMotion(event.matches)
+
+    motionPreference.addEventListener('change', handleMotionPreference)
+    return () => motionPreference.removeEventListener('change', handleMotionPreference)
+  }, [])
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined
+
     const currentWord = words[wordIndex]
 
     const delay = isDeleting ? 50 : 100
@@ -44,7 +54,7 @@ export default function Hero() {
     }, pause)
 
     return () => clearTimeout(timeout)
-  }, [charIndex, isDeleting, wordIndex])
+  }, [charIndex, isDeleting, wordIndex, prefersReducedMotion, words])
 
   return (
     <section
@@ -57,38 +67,37 @@ export default function Hero() {
         data-aos="fade-right"
       >
         <p className="eyebrow mb-6">
-          Frontend + Python / Portfolio 2026
+          {t('hero.kicker')}
         </p>
 
         <h1 className="font-display text-6xl font-semibold leading-[0.94] text-ink dark:text-white sm:text-7xl lg:text-8xl">
-          Mohamed
+          {t('hero.firstName')}
           <br />
           <span className="text-forest dark:text-lime">
-            Ali.
+            {t('hero.lastName')}
           </span>
         </h1>
 
         <h2 className="mt-6 font-display text-2xl font-semibold text-forest dark:text-lime sm:text-3xl">
-          Frontend developer
+          {t('hero.role')}
         </h2>
 
         <p className="body-copy mt-5 max-w-xl text-lg">
-          I build clear, responsive web experiences and practical
-          Python tools.
+          {t('hero.intro')}
         </p>
 
         {/* Typing Animation */}
         <p className="mt-5 text-sm font-medium text-muted dark:text-slate-400">
-          Currently building{' '}
-          <span className="sr-only">React interfaces, Python tools, and accessible experiences.</span>
+          {t('hero.building')}{' '}
+          <span className="sr-only">{t('hero.srWords')}</span>
           <span className="font-semibold text-forest dark:text-lime" aria-hidden="true">
-            {words[wordIndex].slice(0, charIndex)}
+            {prefersReducedMotion ? words[0] : words[wordIndex].slice(0, charIndex)}
           </span>
 
-          <span
-            className="ml-1 inline-block h-4 w-px translate-y-0.5 bg-coral"
+          {!prefersReducedMotion && <span
+            className="ms-1 inline-block h-4 w-px translate-y-0.5 bg-coral"
             aria-hidden="true"
-          />
+          />}
         </p>
 
         {/* Buttons */}
@@ -97,9 +106,9 @@ export default function Hero() {
             href="#projects"
             className="inline-flex min-h-12 items-center gap-3 bg-forest px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-ink dark:bg-lime dark:text-ink dark:hover:bg-white"
           >
-            View selected work
+            {t('hero.work')}
             <i
-              className="fa-solid fa-arrow-right text-xs"
+              className="directional-arrow fa-solid fa-arrow-right text-xs"
               aria-hidden="true"
             />
           </a>
@@ -108,7 +117,7 @@ export default function Hero() {
             href="#contact"
             className="inline-flex min-h-12 items-center border border-line px-5 py-3 text-sm font-bold text-ink transition-colors hover:border-forest hover:text-forest dark:border-white/25 dark:text-white dark:hover:border-lime dark:hover:text-lime"
           >
-            Get in touch
+            {t('hero.touch')}
           </a>
         </div>
       </div>
@@ -118,20 +127,24 @@ export default function Hero() {
         className="order-1 lg:order-2"
         data-aos="fade-left"
       >
-        <figure className="relative mx-auto max-w-md">
+        <figure className="mx-auto flex w-full max-w-[22rem] flex-col items-center gap-4">
           <img
             src={hamada}
-            className="aspect-[4/5] w-full border border-line object-cover object-center dark:border-white/10"
-            alt="Mohamed Ali"
+            width="520"
+            height="780"
+            fetchPriority="high"
+            decoding="async"
+            className="mx-auto aspect-square w-full rounded-full border-4 border-white object-cover object-top shadow-[0_16px_50px_rgba(18,59,99,0.18)] ring-1 ring-blue-200 dark:border-[#10243d] dark:ring-blue-400/40"
+            alt={t('hero.photoAlt')}
           />
 
-          <figcaption className="absolute bottom-0 left-0 flex items-center gap-3 bg-lime px-4 py-3 text-xs font-bold text-ink sm:px-5">
+          <figcaption className="inline-flex w-fit max-w-full items-center justify-center gap-3 border border-blue-300/40 bg-[#0b1f3a] px-4 py-3 text-center text-xs font-bold text-white shadow-sm sm:px-5">
             <span
-              className="size-2 rounded-full bg-forest"
+              className="size-2 shrink-0 rounded-full bg-cyan-400"
               aria-hidden="true"
             />
 
-            Based in Sudan · Working worldwide
+            {t('hero.location')}
           </figcaption>
         </figure>
       </div>

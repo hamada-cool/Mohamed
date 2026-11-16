@@ -6,25 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
       (() => {
-        const savedTheme = localStorage.getItem('theme')
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        document.documentElement.classList.toggle('dark', savedTheme === 'dark' || (!savedTheme && prefersDark))
+        try {
+          const savedTheme = localStorage.getItem('theme')
+          const savedLanguage = localStorage.getItem('portfolio-language') === 'ar' ? 'ar' : 'en'
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.lang = savedLanguage
+          document.documentElement.dir = savedLanguage === 'ar' ? 'rtl' : 'ltr'
+          document.documentElement.classList.toggle('dark', savedTheme === 'dark' || (!savedTheme && prefersDark))
+        } catch {
+          document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches)
+        }
       })()
     </script>
-    <meta name="description" content="Mohamed Ali — Frontend &amp; Python Developer specializing in React, modern JavaScript, and building clean, responsive web applications." />
-    <meta name="keywords" content="Mohamed Ali, Front-End Developer, Python Developer, JavaScript Developer, Web Developer, React Developer, Bootstrap"/>
+    <meta name="description" content="Mohamed Ali is a frontend developer building responsive React interfaces and practical Python tools, including ProjectStarter CLI." />
+    <meta name="keywords" content="Mohamed Ali, Frontend Developer, Python Developer, JavaScript Developer, React Developer, ProjectStarter CLI" />
     <meta name="author" content="Mohamed Ali" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mohamed-ashy-mu.vercel.app/" />
     <meta property="og:title" content="Mohamed Ali | Frontend &amp; Python Developer" />
-    <meta property="og:description" content="Portfolio of Mohamed Ali, building responsive interfaces and web applications." />
+    <meta property="og:description" content="Portfolio of Mohamed Ali, building responsive React interfaces and practical Python tools." />
     <meta property="og:image" content="https://mohamed-ashy-mu.vercel.app/og-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohamed Ali, frontend and Python developer, with ProjectStarter CLI selected work." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mohamed Ali | Frontend &amp; Python Developer" />
-    <meta name="twitter:description" content="Portfolio of Mohamed Ali, building responsive interfaces and web applications." />
+    <meta name="twitter:description" content="Portfolio of Mohamed Ali, building responsive React interfaces and practical Python tools." />
     <meta name="twitter:image" content="https://mohamed-ashy-mu.vercel.app/og-preview.png" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="twitter:image:alt" content="Mohamed Ali, frontend and Python developer, with ProjectStarter CLI selected work." />
+    <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#081426" media="(prefers-color-scheme: dark)" />
     <title>Mohamed Ali | Frontend &amp; Python Developer</title>
   </head>
   <body>
