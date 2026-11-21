@@ -49,6 +49,53 @@ html.dark body {
   color: #f4f5ef;
 }
 
+/* One continuous site backdrop; page content remains in its existing layers. */
+#root > div:first-child {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+#root > div:first-child::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-color: #f4f7fb;
+  background-image:
+    radial-gradient(ellipse 76% 22% at 8% 12%, rgb(34 211 238 / 8%), transparent 72%),
+    radial-gradient(ellipse 68% 24% at 94% 48%, rgb(37 99 235 / 7%), transparent 74%),
+    radial-gradient(ellipse 96% 20% at 50% 102%, transparent 66%, rgb(8 145 178 / 15%) 67%, transparent 68.2%),
+    radial-gradient(ellipse 108% 24% at 50% 104%, transparent 66%, rgb(37 99 235 / 10%) 67%, transparent 68.2%),
+    linear-gradient(135deg, #f4f8fc 0%, #edf4fb 52%, #e4eff9 100%);
+  content: "";
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+html.dark #root > div:first-child::before {
+  background-color: #081426;
+  background-image:
+    radial-gradient(ellipse 76% 22% at 8% 12%, rgb(34 211 238 / 10%), transparent 72%),
+    radial-gradient(ellipse 68% 24% at 94% 48%, rgb(37 99 235 / 10%), transparent 74%),
+    radial-gradient(ellipse 96% 20% at 50% 102%, transparent 66%, rgb(34 211 238 / 24%) 67%, transparent 68.2%),
+    radial-gradient(ellipse 108% 24% at 50% 104%, transparent 66%, rgb(37 99 235 / 18%) 67%, transparent 68.2%),
+    linear-gradient(135deg, #031322 0%, #061a2e 52%, #081426 100%);
+}
+
+/* Remove section-level surfaces so the shared backdrop can flow through. */
+#top,
+#about,
+#certifications,
+html.dark #skills,
+#root > div:first-child > footer {
+  background: transparent;
+}
+
+/* The existing Hero wave is represented once by the shared backdrop above. */
+#top > svg:last-child {
+  display: none;
+}
+
 ::selection {
   background: #bfdbfe;
   color: var(--color-ink);
