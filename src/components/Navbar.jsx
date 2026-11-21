@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLanguage } from '../i18n/useLanguage.js'
 
 const navItems = [
@@ -21,6 +22,9 @@ export default function Navbar() {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false)
   const menuToggleRef = useRef(null)
   const languageMenuRef = useRef(null)
+  const languageButtonRef = useRef(null)
+  const languageDropdownRef = useRef(null)
+  const [languageDropdownPosition, setLanguageDropdownPosition] = useState(null)
   const [theme, setTheme] = useState(() => {
     let savedTheme = null
     try {
@@ -57,11 +61,13 @@ export default function Navbar() {
       if (event.key === 'Escape') {
         setIsMenuOpen(false)
         setIsLanguageOpen(false)
-        menuToggleRef.current?.focus()
+        ;(isLanguageOpen ? languageButtonRef : menuToggleRef).current?.focus()
       }
     }
     const handlePointerDown = (event) => {
-      if (isLanguageOpen && !languageMenuRef.current?.contains(event.target)) {
+      const clickedLanguageButton = languageMenuRef.current?.contains(event.target)
+      const clickedDropdown = languageDropdownRef.current?.contains(event.target)
+      if (isLanguageOpen && !clickedLanguageButton && !clickedDropdown) {
         setIsLanguageOpen(false)
       }
     }
@@ -73,6 +79,40 @@ export default function Navbar() {
       window.removeEventListener('pointerdown', handlePointerDown)
     }
   }, [isMenuOpen, isLanguageOpen])
+
+  useLayoutEffect(() => {
+    if (!isLanguageOpen) return undefined
+
+    const positionDropdown = () => {
+      const button = languageButtonRef.current
+      const dropdown = languageDropdownRef.current
+      if (!button || !dropdown) return
+
+      const trigger = button.getBoundingClientRect()
+      const menu = dropdown.getBoundingClientRect()
+      const gap = 8
+      const edge = 12
+      const roomBelow = window.innerHeight - trigger.bottom - gap
+      const roomAbove = trigger.top - gap
+      const opensUp = roomBelow < menu.height + edge && roomAbove >= menu.height + edge
+      const top = opensUp
+        ? trigger.top - menu.height - gap
+        : Math.min(trigger.bottom + gap, window.innerHeight - menu.height - edge)
+      const isRtl = document.documentElement.dir === 'rtl'
+      const preferredLeft = isRtl ? trigger.left : trigger.right - menu.width
+      const left = Math.max(edge, Math.min(preferredLeft, window.innerWidth - menu.width - edge))
+
+      setLanguageDropdownPosition({ top: Math.max(edge, top), left })
+    }
+
+    positionDropdown()
+    window.addEventListener('resize', positionDropdown)
+    window.addEventListener('scroll', positionDropdown, true)
+    return () => {
+      window.removeEventListener('resize', positionDropdown)
+      window.removeEventListener('scroll', positionDropdown, true)
+    }
+  }, [isLanguageOpen, language])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -172,9 +212,13 @@ export default function Navbar() {
 
           <div className="relative" ref={languageMenuRef}>
             <button
+              ref={languageButtonRef}
               type="button"
               className="flex h-10 items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 text-xs font-bold tracking-wide text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300/40 hover:bg-emerald-300/10 hover:text-emerald-200 focus-visible:outline-emerald-300"
-              onClick={() => setIsLanguageOpen((open) => !open)}
+              onClick={() => {
+                setLanguageDropdownPosition(null)
+                setIsLanguageOpen((open) => !open)
+              }}
               aria-label={t('nav.language')}
               aria-haspopup="menu"
               aria-expanded={isLanguageOpen}
@@ -182,13 +226,23 @@ export default function Navbar() {
               {language.toUpperCase()}
               <i className={`fa-solid fa-chevron-down text-[9px] transition-transform duration-200 ${isLanguageOpen ? 'rotate-180' : ''}`} aria-hidden="true"></i>
             </button>
-            {isLanguageOpen && (
-              <div className="absolute end-0 top-[calc(100%+0.6rem)] z-20 min-w-36 overflow-hidden rounded-xl border border-white/10 bg-[#10243d] p-1.5 shadow-xl shadow-slate-950/30" role="menu" aria-label={t('nav.language')}>
+            {isLanguageOpen && createPortal(
+              <div
+                ref={languageDropdownRef}
+                className="fixed z-[100] max-h-[calc(100vh-24px)] min-w-36 max-w-[calc(100vw-24px)] overflow-y-auto rounded-xl border border-white/10 bg-[#10243d] p-1.5 shadow-xl shadow-slate-950/30"
+                style={{
+                  top: languageDropdownPosition?.top ?? 0,
+                  left: languageDropdownPosition?.left ?? 0,
+                  visibility: languageDropdownPosition ? 'visible' : 'hidden',
+                }}
+                role="menu"
+                aria-label={t('nav.language')}
+              >
                 {['en', 'ar'].map((code) => (
                   <button
                     key={code}
                     type="button"
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-start text-sm transition-colors hover:bg-white/5 ${language === code ? 'text-emerald-300' : 'text-slate-200'}`}
+                    className={`flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2 text-start text-sm transition-colors hover:bg-white/5 ${language === code ? 'text-emerald-300' : 'text-slate-200'}`}
                     onClick={() => {
                       setLanguage(code)
                       setIsLanguageOpen(false)
@@ -201,7 +255,8 @@ export default function Navbar() {
                     {language === code && <i className="fa-solid fa-check text-xs" aria-hidden="true"></i>}
                   </button>
                 ))}
-              </div>
+              </div>,
+              document.body,
             )}
           </div>
           </div>
